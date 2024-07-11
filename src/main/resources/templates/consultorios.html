@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Consultorios</title>
+</head>
+<body>
+<h1>Lista de Consultorios</h1>
+<a href="/consultorio/form">Agregar Consultorio</a>
+<table>
+    <tr>
+        <th>Número</th>
+        <th>Piso</th>
+        <th>Acciones</th>
+    </tr>
+    <tr th:each="consultorio : ${consultorios}">
+        <td th:text="${consultorio.numero}">Número</td>
+        <td th:text="${consultorio.piso}">Piso</td>
+        <td>
+            <a th:href="@{/consultorio/delete(id=${consultorio.id})}">Eliminar</a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

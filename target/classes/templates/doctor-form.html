@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Doctor Form</title>
+</head>
+<body>
+<h1>Doctor Form</h1>
+<form th:action="@{/doctor/save}" th:object="${doctor}" method="post">
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" th:field="*{nombre}"/>
+    <label for="apellidoPaterno">Apellido Paterno:</label>
+    <input type="text" id="apellidoPaterno" th:field="*{apellidoPaterno}"/>
+    <label for="apellidoMaterno">Apellido Materno:</label>
+    <input type="text" id="apellidoMaterno" th:field="*{apellidoMaterno}"/>
+    <label for="especialidad">Especialidad:</label>
+    <input type="text" id="especialidad" th:field="*{especialidad}"/>
+    <button type="submit">Guardar</button>
+</form>
+<a href="/doctores">Volver a la lista de doctores</a>
+</body>
+</html>

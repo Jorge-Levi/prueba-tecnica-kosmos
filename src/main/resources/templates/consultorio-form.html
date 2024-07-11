@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Consultorio Form</title>
+</head>
+<body>
+<h1>Consultorio Form</h1>
+<form th:action="@{/consultorio/save}" th:object="${consultorio}" method="post">
+    <label for="numero">Número:</label>
+    <input type="text" id="numero" th:field="*{numero}"/>
+    <label for="piso">Piso:</label>
+    <input type="text" id="piso" th:field="*{piso}"/>
+    <button type="submit">Guardar</button>
+</form>
+<a href="/consultorios">Volver a la lista de consultorios</a>
+</body>
+</html>
