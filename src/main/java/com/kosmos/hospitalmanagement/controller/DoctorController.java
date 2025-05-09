@@ -2,6 +2,7 @@ package com.kosmos.hospitalmanagement.controller;
 
 import com.kosmos.hospitalmanagement.model.Doctor;
 import com.kosmos.hospitalmanagement.service.DoctorService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,12 +31,17 @@ public class DoctorController {
     }
 
     @PostMapping
-    public Doctor createDoctor(@RequestBody Doctor doctor) {
-        return doctorService.saveDoctor(doctor);
+    public ResponseEntity<?> createDoctor(@Valid @RequestBody Doctor doctor) {
+        try {
+            Doctor savedDoctor = doctorService.saveDoctor(doctor);
+            return ResponseEntity.ok(savedDoctor);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Doctor> updateDoctor(@PathVariable Long id, @RequestBody Doctor doctorDetails) {
+    public ResponseEntity<?> updateDoctor(@PathVariable Long id, @Valid @RequestBody Doctor doctorDetails) {
         Doctor doctor = doctorService.getDoctorById(id);
         if (doctor == null) {
             return ResponseEntity.notFound().build();
@@ -44,8 +50,12 @@ public class DoctorController {
         doctor.setApellidoPaterno(doctorDetails.getApellidoPaterno());
         doctor.setApellidoMaterno(doctorDetails.getApellidoMaterno());
         doctor.setEspecialidad(doctorDetails.getEspecialidad());
-        Doctor updatedDoctor = doctorService.saveDoctor(doctor);
-        return ResponseEntity.ok(updatedDoctor);
+        try {
+            Doctor updatedDoctor = doctorService.saveDoctor(doctor);
+            return ResponseEntity.ok(updatedDoctor);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")

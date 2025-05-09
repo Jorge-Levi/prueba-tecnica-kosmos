@@ -1,23 +1,37 @@
 package com.kosmos.hospitalmanagement.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
+@Table(name = "consultorio", indexes = {
+        @Index(name = "idx_numero", columnList = "numero"),
+        @Index(name = "idx_piso", columnList = "piso")
+})
 public class Consultorio {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int numero;
+
+    @NotNull(message = "El número del consultorio es obligatorio")
+    @Min(value = 1, message = "El número del consultorio debe ser mayor que 0")
+    private Integer numero;
+
+    @NotNull(message = "El piso es obligatorio")
+    @Size(min = 1, max = 50, message = "El piso debe tener entre 1 y 50 caracteres")
     private String piso;
 
     public Consultorio() {
-
     }
 
-    // Getters and Setters
+    public Consultorio(Integer numero, String piso) {
+        this.numero = numero;
+        this.piso = piso;
+    }
+
     public Long getId() {
         return id;
     }
@@ -26,11 +40,11 @@ public class Consultorio {
         this.id = id;
     }
 
-    public int getNumero() {
+    public Integer getNumero() {
         return numero;
     }
 
-    public void setNumero(int numero) {
+    public void setNumero(Integer numero) {
         this.numero = numero;
     }
 
@@ -41,10 +55,4 @@ public class Consultorio {
     public void setPiso(String piso) {
         this.piso = piso;
     }
-
-    public Consultorio(int numero, String piso) {
-        this.numero = numero;
-        this.piso = piso;
-    }
-
 }

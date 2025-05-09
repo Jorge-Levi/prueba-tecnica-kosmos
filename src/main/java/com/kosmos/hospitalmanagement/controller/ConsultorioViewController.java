@@ -29,14 +29,26 @@ public class ConsultorioViewController {
     }
 
     @PostMapping("/consultorio/save")
-    public String saveConsultorio(@ModelAttribute Consultorio consultorio) {
-        consultorioService.saveConsultorio(consultorio);
-        return "redirect:/consultorios";
+    public String saveConsultorio(@ModelAttribute Consultorio consultorio, Model model) {
+        try {
+            consultorioService.saveConsultorio(consultorio);
+            return "redirect:/consultorios";
+        } catch (Exception e) {
+            model.addAttribute("consultorio", consultorio);
+            model.addAttribute("errorMessage", e.getMessage());
+            return "consultorio-form";
+        }
     }
 
     @GetMapping("/consultorio/delete")
-    public String deleteConsultorio(@RequestParam Long id) {
-        consultorioService.deleteConsultorio(id);
-        return "redirect:/consultorios";
+    public String deleteConsultorio(@RequestParam Long id, Model model) {
+        try {
+            consultorioService.deleteConsultorio(id);
+            return "redirect:/consultorios";
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "Error al eliminar consultorio: " + e.getMessage());
+            model.addAttribute("consultorios", consultorioService.getAllConsultorios());
+            return "consultorios";
+        }
     }
 }
